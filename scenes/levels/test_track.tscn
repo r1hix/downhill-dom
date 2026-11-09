@@ -1,0 +1,68 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/player_bike.tscn" id="1_c6jrw"]
+[ext_resource type="Script" path="res://scripts/bike_controller.gd" id="2_d1w0v"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_fj3rk"]
+sky_top_color = Color(0.25, 0.5, 0.9, 1)
+sky_horizon_color = Color(0.7, 0.8, 0.9, 1)
+ground_bottom_color = Color(0.2, 0.15, 0.1, 1)
+ground_horizon_color = Color(0.6, 0.55, 0.5, 1)
+
+[sub_resource type="Sky" id="Sky_f2ite"]
+sky_material = SubResource("ProceduralSkyMaterial_fj3rk")
+
+[sub_resource type="Environment" id="Environment_c6rpe"]
+background_mode = 2
+sky = SubResource("Sky_f2ite")
+tonemap_mode = 2
+ssao_enabled = true
+glow_enabled = true
+fog_enabled = true
+fog_light_color = Color(0.7, 0.8, 0.9, 1)
+fog_density = 0.0015
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y5a1h"]
+albedo_color = Color(0.35, 0.3, 0.25, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k43wr"]
+albedo_color = Color(0.25, 0.25, 0.28, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_at531"]
+albedo_color = Color(0.2, 0.35, 0.2, 1)
+
+[node name="TestTrack" type="Node3D" unique_id=1355618853]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1085576190]
+environment = SubResource("Environment_c6rpe")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1726264233]
+transform = Transform3D(0.81915206, -0.43938506, 0.36868784, 0, 0.64278764, 0.76604444, -0.57357645, -0.62750685, 0.5265408, 0, 0, 0)
+light_energy = 1.2
+shadow_enabled = true
+
+[node name="Ramp_40Deg" type="CSGBox3D" parent="." unique_id=883948240]
+transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.76604444, 0, 60, 0)
+use_collision = true
+collision_mask = 2
+size = Vector3(20, 2, 200)
+material = SubResource("StandardMaterial3D_y5a1h")
+
+[node name="StartPlatform" type="CSGBox3D" parent="." unique_id=47761221]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 123.99318, 85.07236)
+use_collision = true
+size = Vector3(24, 2, 24)
+material = SubResource("StandardMaterial3D_k43wr")
+
+[node name="CatchRunout" type="CSGBox3D" parent="." unique_id=1096280789]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.9931831, -113.07236)
+use_collision = true
+size = Vector3(30, 2, 80)
+material = SubResource("StandardMaterial3D_at531")
+
+[node name="PlayerBike" type="CharacterBody3D" parent="." unique_id=49388284 instance=ExtResource("1_c6jrw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 125.49318, 70.07236)
+collision_layer = 2
+floor_snap_length = 0.5
+script = ExtResource("2_d1w0v")
